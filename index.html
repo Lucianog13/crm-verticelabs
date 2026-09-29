@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Vértice CRM</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar" hidden>
+    <div class="topbar__marca">Vértice <strong>CRM</strong></div>
+    <div class="topbar__usuario">
+      <span id="quien-activo"></span>
+      <button id="btn-salir" class="btn-link" data-accion="salir">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Login -->
+    <section class="vista" id="vista-login">
+      <div class="centro">
+        <h1>Vértice <strong>CRM</strong></h1>
+        <p class="subtitulo">Clientes y ventas de Vértice Labs</p>
+        <form id="form-login" class="tarjeta">
+          <label for="input-pass">Contraseña</label>
+          <input type="password" id="input-pass" placeholder="Escribí la contraseña" autocomplete="current-password" />
+          <button type="submit" class="btn btn-primario">Entrar</button>
+          <p id="login-error" class="error" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ¿Quién sos? -->
+    <section class="vista" id="vista-quien" hidden>
+      <div class="centro">
+        <h2>¿Quién sos?</h2>
+        <p class="subtitulo">Tocá tu nombre para empezar</p>
+        <div id="lista-quien" class="lista-quien"></div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="vista" id="vista-dashboard" hidden>
+      <div class="contadores" id="contadores"></div>
+      <button id="btn-nuevo" class="btn btn-primario btn-nuevo">＋ Nuevo lead</button>
+      <div id="lista-leads" class="lista-leads"></div>
+      <p id="leads-vacio" class="vacio" hidden>No hay leads todavía. Tocá "＋ Nuevo lead".</p>
+    </section>
+  </main>
+
+  <!-- Modal nuevo lead -->
+  <div class="modal" id="modal-nuevo" hidden>
+    <div class="modal__fondo" data-accion="cerrar-modal"></div>
+    <div class="modal__caja">
+      <h3>Nuevo lead</h3>
+      <form id="form-nuevo">
+        <label>Nombre *</label>
+        <input id="nuevo-nombre" required placeholder="Nombre y apellido" />
+        <label>Teléfono</label>
+        <input id="nuevo-tel" type="tel" placeholder="Ej: 343 555-1234" />
+        <label>Email</label>
+        <input id="nuevo-email" type="email" placeholder="correo@ejemplo.com" />
+        <label>Empresa / negocio</label>
+        <input id="nuevo-empresa" placeholder="Opcional" />
+        <div class="modal__acciones">
+          <button type="button" class="btn btn-secundario" data-accion="cerrar-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Guardar</button>
+        </div>
+        <p id="nuevo-error" class="error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal enviar mail -->
+  <div class="modal" id="modal-mail" hidden>
+    <div class="modal__fondo" data-accion="cerrar-modal"></div>
+    <div class="modal__caja">
+      <h3>Enviar mail</h3>
+      <p id="mail-para" class="subtitulo"></p>
+      <form id="form-mail">
+        <label>Asunto</label>
+        <input id="mail-asunto" required placeholder="Asunto del mail" />
+        <label>Mensaje</label>
+        <textarea id="mail-mensaje" rows="5" required placeholder="Escribí el mensaje..."></textarea>
+        <p id="mail-firma" class="firma"></p>
+        <div class="modal__acciones">
+          <button type="button" class="btn btn-secundario" data-accion="cerrar-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Enviar</button>
+        </div>
+        <p id="mail-estado" class="error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
