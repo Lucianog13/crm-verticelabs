@@ -7,6 +7,12 @@ const UI = (() => {
     descarte:   { label: "Descarte",   clase: "estado-descarte" },
   };
 
+  const MATERIAL = [
+    { img: "marketing/vertice-general.png", titulo: "Servicios generales" },
+    { img: "marketing/vertice-turnos.png",  titulo: "Turnos por WhatsApp" },
+    { img: "marketing/vertice-pedidos.png", titulo: "Pedidos por WhatsApp" },
+  ];
+
   function esc(t) {
     return String(t ?? "").replace(/[&<>"']/g, (c) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -71,6 +77,16 @@ const UI = (() => {
     }).join("");
   }
 
+  function pintarMaterial() {
+    document.getElementById("material").innerHTML = MATERIAL
+      .map((m) => `
+        <a class="mat" href="${m.img}" target="_blank" rel="noopener">
+          <img class="mat__img" src="${m.img}" alt="${esc(m.titulo)}" loading="lazy" />
+          <span class="mat__titulo">${esc(m.titulo)}</span>
+        </a>`)
+      .join("");
+  }
+
   function pintarQuien(usuarios) {
     document.getElementById("lista-quien").innerHTML = usuarios
       .map((u) => `<button class="btn-quien" data-accion="elegir-quien" data-nombre="${esc(u.nombre)}">
@@ -100,6 +116,6 @@ const UI = (() => {
 
   return {
     ESTADOS, esc, formatFecha, mostrarVista, pintarContadores, pintarLeads,
-    pintarQuien, pintarQuienActivo, toast, abrirModal, cerrarModales,
+    pintarMaterial, pintarQuien, pintarQuienActivo, toast, abrirModal, cerrarModales,
   };
 })();

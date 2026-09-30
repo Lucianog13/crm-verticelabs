@@ -118,6 +118,19 @@ input:focus, textarea:focus { outline: 2px solid var(--primario); border-color: 
 
 .vacio { text-align: center; color: var(--muted); padding: 40px 0; }
 
+/* ---------- material de venta ---------- */
+.material-titulo { font-size: 22px; margin: 30px 0 2px; }
+.material-hint { color: var(--muted); font-size: 15px; margin: 0 0 12px; }
+.material { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.mat {
+  background: var(--tarjeta); border: 1px solid var(--borde);
+  border-radius: var(--radio); overflow: hidden; text-decoration: none;
+  color: var(--texto); display: flex; flex-direction: column;
+}
+.mat:hover { border-color: var(--primario); }
+.mat__img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; background: #eef1f4; }
+.mat__titulo { padding: 10px 12px; font-weight: 700; font-size: 16px; }
+
 /* ---------- modales ---------- */
 .modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
 .modal[hidden] { display: none; }

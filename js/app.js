@@ -69,6 +69,7 @@ const App = (() => {
     }
     UI.pintarContadores(estado.leads);
     UI.pintarLeads(estado.leads);
+    UI.pintarMaterial();
     UI.pintarQuienActivo(estado.quien);
     UI.mostrarVista("vista-dashboard");
   }
