@@ -3,6 +3,7 @@ const App = (() => {
   const LS_TOKEN = "crm_access";
   const LS_REFRESH = "crm_refresh";
   const LS_QUIEN = "crm_quien";
+  const LS_TEMA = "crm_tema";
 
   const estado = {
     quien: localStorage.getItem(LS_QUIEN) || null,
@@ -10,6 +11,18 @@ const App = (() => {
     leads: [],
     leadMail: null,
   };
+
+  // ---------- tema (modo oscuro) ----------
+  function aplicarTema(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    const b = document.getElementById("btn-tema");
+    if (b) b.textContent = t === "dark" ? "☀️" : "🌙";
+  }
+  function temaInicial() {
+    const g = localStorage.getItem(LS_TEMA);
+    if (g) return g;
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
 
   // ---------- sesión ----------
   function guardarSesion(r) {
@@ -117,6 +130,13 @@ const App = (() => {
 
   // ---------- eventos ----------
   function init() {
+    aplicarTema(temaInicial());
+    document.getElementById("btn-tema").addEventListener("click", () => {
+      const nuevo = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      localStorage.setItem(LS_TEMA, nuevo);
+      aplicarTema(nuevo);
+    });
+
     document.getElementById("form-login").addEventListener("submit", async (e) => {
       e.preventDefault();
       const pass = document.getElementById("input-pass").value;
