@@ -25,7 +25,7 @@ Leads + envío de mails. Login con contraseña compartida.
 - `js/ui.js` → render de vistas (solo DOM) + `MATERIAL` (lista de flyers) + `pintarMaterial()`.
 - `js/app.js` → estado, sesión, eventos.
 - `index.html` → vistas (login / quien-sos / dashboard) + modales + sección "Material de venta".
-- `marketing/*.png` → flyers de venta (1080×1350). Se generan con `marketing/generar_flyers.py` (local, no commiteado; HTML plantilla + QR a wa.me/5493434065289).
+- `marketing/*.png` → flyers de venta (1080×1350). Se generan con `marketing/generar_flyers.py` (local, no commiteado; HTML plantilla + QR a www.verticelabs.com.ar, tel 343 404-9064).
 
 ## Pendiente / bloqueos
 - **Brevo lista blanca de IPs:** el envío de mails desde Supabase falla con 401
