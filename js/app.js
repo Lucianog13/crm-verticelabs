@@ -10,6 +10,7 @@ const App = (() => {
     usuarios: [],
     leads: [],
     leadMail: null,
+    eventos: [],
   };
 
   // ---------- tema (modo oscuro) ----------
@@ -83,6 +84,12 @@ const App = (() => {
     UI.pintarContadores(estado.leads);
     UI.pintarLeads(estado.leads);
     UI.pintarMaterial();
+    try {
+      estado.eventos = await API.listarEventos();
+    } catch {
+      estado.eventos = [];
+    }
+    UI.pintarEventos(estado.eventos);
     UI.pintarQuienActivo(estado.quien);
     UI.mostrarVista("vista-dashboard");
   }
@@ -96,6 +103,18 @@ const App = (() => {
   async function setEstado(id, nuevoEstado) {
     await API.cambiarEstado(id, nuevoEstado, estado.quien);
     await mostrarDashboard();
+  }
+
+  async function guardarEvento(datos) {
+    await API.crearEvento({ ...datos, creado_por: estado.quien });
+    estado.eventos = await API.listarEventos();
+    UI.pintarEventos(estado.eventos);
+  }
+
+  async function borrarEvento(id) {
+    await API.borrarEvento(id);
+    estado.eventos = await API.listarEventos();
+    UI.pintarEventos(estado.eventos);
   }
 
   function abrirMail(id) {
@@ -201,6 +220,34 @@ const App = (() => {
       }
     });
 
+    document.getElementById("btn-evento").addEventListener("click", () => {
+      document.getElementById("form-evento").reset();
+      document.getElementById("evento-error").hidden = true;
+      UI.abrirModal("modal-evento");
+    });
+
+    document.getElementById("form-evento").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = document.getElementById("evento-error");
+      const titulo = document.getElementById("evento-titulo").value.trim();
+      const fecha = document.getElementById("evento-fecha").value;
+      if (!titulo || !fecha) return;
+      err.hidden = true;
+      try {
+        await guardarEvento({
+          titulo,
+          fecha,
+          hora: document.getElementById("evento-hora").value || null,
+          notas: document.getElementById("evento-notas").value.trim() || null,
+        });
+        UI.cerrarModales();
+        UI.toast("Recordatorio guardado ✓");
+      } catch (ex) {
+        err.textContent = "No se pudo guardar. " + ex.message;
+        err.hidden = false;
+      }
+    });
+
     // Delegación de eventos para acciones dinámicas
     document.addEventListener("click", async (e) => {
       const acc = e.target.closest("[data-accion]");
@@ -212,6 +259,8 @@ const App = (() => {
         abrirMail(acc.dataset.id);
       } else if (a === "cerrar-modal") {
         UI.cerrarModales();
+      } else if (a === "borrar-evento") {
+        await borrarEvento(acc.dataset.id);
       } else if (a === "salir") {
         salir();
       }

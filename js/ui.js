@@ -20,7 +20,9 @@ const UI = (() => {
   }
 
   function formatFecha(iso) {
-    const d = new Date(iso);
+    const s = String(iso ?? "");
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    const d = m ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(s);
     if (isNaN(d)) return "";
     return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
   }
@@ -87,6 +89,38 @@ const UI = (() => {
       .join("");
   }
 
+  function gcalLink(ev) {
+    const t = encodeURIComponent(ev.titulo);
+    if (!ev.hora) {
+      const d = String(ev.fecha).replace(/-/g, "");
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=${d}/${d}`;
+    }
+    const inicio = new Date(`${ev.fecha}T${ev.hora}:00`);
+    const fin = new Date(inicio.getTime() + 3600000);
+    const fmt = (x) => x.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=${fmt(inicio)}/${fmt(fin)}`;
+  }
+
+  function pintarEventos(eventos) {
+    document.getElementById("eventos-vacio").hidden = eventos.length > 0;
+    document.getElementById("lista-eventos").innerHTML = eventos.map((ev) => {
+      const h = ev.hora ? " · " + String(ev.hora).slice(0, 5) + " hs" : "";
+      const notas = ev.notas ? `<span class="evento__notas">${esc(ev.notas)}</span>` : "";
+      return `
+        <article class="evento">
+          <div class="evento__info">
+            <span class="evento__titulo">${esc(ev.titulo)}</span>
+            <span class="evento__meta">📅 ${formatFecha(ev.fecha)}${h}</span>
+            ${notas}
+          </div>
+          <div class="evento__acciones">
+            <a class="btn btn-gcal" href="${gcalLink(ev)}" target="_blank" rel="noopener">📲 Celular</a>
+            <button class="btn btn-del" data-accion="borrar-evento" data-id="${ev.id}" title="Borrar">🗑️</button>
+          </div>
+        </article>`;
+    }).join("");
+  }
+
   function pintarQuien(usuarios) {
     document.getElementById("lista-quien").innerHTML = usuarios
       .map((u) => `<button class="btn-quien" data-accion="elegir-quien" data-nombre="${esc(u.nombre)}">
@@ -116,6 +150,6 @@ const UI = (() => {
 
   return {
     ESTADOS, esc, formatFecha, mostrarVista, pintarContadores, pintarLeads,
-    pintarMaterial, pintarQuien, pintarQuienActivo, toast, abrirModal, cerrarModales,
+    pintarMaterial, pintarEventos, pintarQuien, pintarQuienActivo, toast, abrirModal, cerrarModales,
   };
 })();

@@ -63,6 +63,19 @@ const API = (() => {
     listarUsuarios() {
       return pedir("/rest/v1/usuarios_crm?select=nombre,firma_mail&order=id");
     },
+    listarEventos() {
+      return pedir("/rest/v1/eventos_crm?select=*&order=fecha.asc,hora.asc,id.asc");
+    },
+    crearEvento(ev) {
+      return pedir("/rest/v1/eventos_crm?select=*", {
+        method: "POST", body: ev, prefer: "return=representation",
+      });
+    },
+    borrarEvento(id) {
+      return pedir("/rest/v1/eventos_crm?id=eq." + id, {
+        method: "DELETE", prefer: "return=minimal",
+      });
+    },
     enviarMail({ lead_id, asunto, mensaje, remitente, destinatario }) {
       return pedir("/rest/v1/rpc/enviar_mail_lead", {
         method: "POST",

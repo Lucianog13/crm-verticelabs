@@ -156,6 +156,28 @@ input:focus, textarea:focus { outline: 2px solid var(--primario); border-color: 
 .toast--ok { background: #065f46; }
 .toast--error { background: #991b1b; }
 
+/* ---------- agenda ---------- */
+.btn-evento { margin-bottom: 12px; }
+.lista-eventos { display: flex; flex-direction: column; gap: 10px; }
+.evento {
+  background: var(--tarjeta); border: 1px solid var(--borde);
+  border-radius: var(--radio); padding: 14px 16px;
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+}
+.evento__info { display: flex; flex-direction: column; gap: 3px; }
+.evento__titulo { font-size: 18px; font-weight: 700; }
+.evento__meta { color: var(--muted); font-size: 15px; }
+.evento__notas { color: var(--muted); font-size: 14px; }
+.evento__acciones { display: flex; gap: 8px; align-items: center; flex: 0 0 auto; }
+.btn-gcal { background: #e0f2fe; color: #075985; font-size: 15px; min-height: 44px; text-decoration: none; }
+.btn-gcal:hover { background: #cfe8fb; }
+.btn-del { background: #fee2e2; color: #b91c1c; font-size: 16px; min-height: 44px; padding: 0 14px; }
+.btn-del:hover { background: #fecaca; }
+[data-theme="dark"] .btn-gcal { background: #0c4a6e; color: #7dd3fc; }
+[data-theme="dark"] .btn-gcal:hover { background: #155e85; }
+[data-theme="dark"] .btn-del { background: #3f1d1d; color: #fca5a5; }
+[data-theme="dark"] .btn-del:hover { background: #512626; }
+
 /* ---------- modo oscuro ---------- */
 .btn-tema { background: none; border: none; color: #cbd5e1; cursor: pointer; font-size: 20px; line-height: 1; padding: 2px 4px; }
 .btn-tema:hover { color: #fff; }
