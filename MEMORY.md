@@ -22,9 +22,10 @@ Leads + envío de mails. Login con contraseña compartida.
 ## Archivos clave
 - `js/config.js` → URL + publishable key (público).
 - `js/api.js` → capa Supabase (auth + REST + RPC).
-- `js/ui.js` → render de vistas (solo DOM).
+- `js/ui.js` → render de vistas (solo DOM) + `MATERIAL` (lista de flyers) + `pintarMaterial()`.
 - `js/app.js` → estado, sesión, eventos.
-- `index.html` → vistas (login / quien-sos / dashboard) + modales.
+- `index.html` → vistas (login / quien-sos / dashboard) + modales + sección "Material de venta".
+- `marketing/*.png` → flyers de venta (1080×1350). Se generan con `marketing/generar_flyers.py` (local, no commiteado; HTML plantilla + QR a wa.me/5493434065289).
 
 ## Pendiente / bloqueos
 - **Brevo lista blanca de IPs:** el envío de mails desde Supabase falla con 401
